@@ -1,0 +1,58 @@
+===== main.py | PASS =====
+=== Successful run: summarize_notes ===
+Summary stub: note has 8 words.
+
+=== Successful run: draft_email ===
+Draft email to meena@example.edu: 'Lab guide review'
+
+=== Failing run: unknown contact ===
+Run failed as expected: no contact found for Unknown Person
+
+=== Register a third skill without changing runtime ===
+[translated to Kannada] Hello, team
+
+=== Full audit log ===
+{'timestamp': '2026-11-13T17:22:02', 'task': {'skill': 'summarize_notes', 'text': 'Agentic AI systems combine goals tools skills memory'}, 'skill': 'summarize_notes', 'tool_calls': [{'tool': 'word_count', 'input': {'text': 'Agentic AI systems combine goals tools skills memory'}, 'output': {'count': 8}}], 'result': 'Summary stub: note has 8 words.', 'error': None}
+{'timestamp': '2026-11-13T17:22:02', 'task': {'skill': 'draft_email', 'to': 'Dr. Meena', 'subject': 'Lab guide review'}, 'skill': 'draft_email', 'tool_calls': [{'tool': 'lookup_contact', 'input': {'name': 'Dr. Meena'}, 'output': {'email': 'meena@example.edu'}}], 'result': "Draft email to meena@example.edu: 'Lab guide review'", 'error': None}
+{'timestamp': '2026-11-13T17:22:02', 'task': {'skill': 'draft_email', 'to': 'Unknown Person', 'subject': 'Hello'}, 'skill': 'draft_email', 'tool_calls': [{'tool': 'lookup_contact', 'input': {'name': 'Unknown Person'}, 'output': {'error': 'no contact found for Unknown Person'}}], 'result': None, 'error': 'no contact found for Unknown Person'}
+{'timestamp': '2026-11-13T17:22:02', 'task': {'skill': 'translate_text', 'text': 'Hello, team', 'target_lang': 'Kannada'}, 'skill': 'translate_text', 'tool_calls': [], 'result': '[translated to Kannada] Hello, team', 'error': None}
+
+=== Scoped memory for user 'uday' ===
+{'last_note_length': 8}
+
+===== assignment_1.py | PASS =====
+
+=== Task 1 for user alice ===
+Word count: 3
+
+=== Task 2 for user alice ===
+Word count: 3
+
+=== Task 3 for user alice ===
+Word count: 3
+
+=== Task 4 for user alice ===
+{'rejected': True, 'reason': 'session task limit reached (maximum 3 tasks per user)'}
+
+=== Another user has an independent quota ===
+Word count: 6
+
+PASS: fourth task rejected; other user's quota unaffected.
+
+===== assignment_2.py | PASS =====
+
+=== Attempt 1 ===
+Skill failed: no contact found for Unknown Person
+
+=== Attempt 2 ===
+Skill failed: no contact found for Unknown Person
+
+=== Attempt 3 ===
+{'escalated': True, 'to': 'human_support', 'reason': "skill 'draft_email' has already failed twice for user 'alice' in this session"}
+
+PASS: two failures recorded; third attempt escalated without execution.
+
+=== Audit log ===
+{'timestamp': '2026-11-13T17:22:10', 'user': 'alice', 'task': {'skill': 'draft_email', 'to': 'Unknown Person', 'subject': 'Lab update'}, 'skill': 'draft_email', 'tool_calls': [{'tool': 'lookup_contact', 'input': {'name': 'Unknown Person'}, 'output': {'error': 'no contact found for Unknown Person'}}], 'result': None, 'error': 'no contact found for Unknown Person'}
+{'timestamp': '2026-11-13T17:22:10', 'user': 'alice', 'task': {'skill': 'draft_email', 'to': 'Unknown Person', 'subject': 'Lab update'}, 'skill': 'draft_email', 'tool_calls': [{'tool': 'lookup_contact', 'input': {'name': 'Unknown Person'}, 'output': {'error': 'no contact found for Unknown Person'}}], 'result': None, 'error': 'no contact found for Unknown Person'}
+{'timestamp': '2026-11-13T17:22:10', 'user': 'alice', 'task': {'skill': 'draft_email', 'to': 'Unknown Person', 'subject': 'Lab update'}, 'skill': 'draft_email', 'tool_calls': [], 'result': {'escalated': True, 'to': 'human_support', 'reason': "skill 'draft_email' has already failed twice for user 'alice' in this session"}, 'error': None, 'escalation': True}

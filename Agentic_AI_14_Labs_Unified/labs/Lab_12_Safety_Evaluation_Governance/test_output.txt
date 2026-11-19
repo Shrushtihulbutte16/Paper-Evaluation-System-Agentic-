@@ -1,0 +1,92 @@
+===== main.py (exit 0) =====
+=== Evaluation gate ===
+Evaluated and passed: True
+
+=== Attempt 1: missing rollback plan (must reject) ===
+{'rejected': True, 'reason': 'No rollback plan defined; rejecting proposal.'}
+
+=== Attempt 2: unscrubbed customer data (must reject) ===
+{'rejected': True, 'reason': 'Diagnostic input was not privacy-scrubbed; rejecting.'}
+
+=== Attempt 3: complete, valid proposal ===
+{'diagnosis': 'Config X causes memory leak under load.', 'proposed_action': 'revert config X to previous value', 'rollback_plan': 'Revert config X to v3 if v4 also leaks.', 'category': 'production', 'requires_approval': True}
+
+=== Human approves; separate privileged process receives handoff ===
+{'applied': False, 'handed_off_to': 'privileged_deploy_process', 'note': 'A separate privileged process performs the actual apply step.'}
+
+=== Adversarial test: attempt direct production write ===
+Blocked as expected: Agent must not hold direct production write access.
+
+=== Full audit log ===
+{'step': 'evaluation', 'data': {'pass_rate': 0.9, 'passed_gate': True}}
+{'step': 'propose_change', 'data': {'rejected': True, 'reason': 'no rollback plan supplied'}}
+{'step': 'propose_change', 'data': {'rejected': True, 'reason': 'unscrubbed customer data in input'}}
+{'step': 'approval_requested', 'data': {'diagnosis': 'Config X causes memory leak under load.', 'proposed_action': 'revert config X to previous value', 'rollback_plan': 'Revert config X to v3 if v4 also leaks.', 'category': 'production', 'requires_approval': True}}
+{'step': 'human_decision', 'data': {'decision': 'approved'}}
+{'step': 'permission_violation', 'data': {'rejected': True}}
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_1.py (exit 0) =====
+=== Within budget ===
+{'rejected': False, 'proposed_action': 'resize staging service', 'estimated_cost': 2500, 'finance_approved': False, 'requires_human_approval': True}
+
+=== Above budget without finance approval ===
+{'rejected': True, 'reason': 'estimated cost exceeds budget; finance approval is required', 'estimated_cost': 9000, 'budget_threshold': 5000}
+
+=== Above budget with explicit finance approval ===
+{'rejected': False, 'proposed_action': 'upgrade production database', 'estimated_cost': 9000, 'finance_approved': True, 'requires_human_approval': True}
+
+=== Adversarial attempt: omit cost estimate ===
+{'rejected': True, 'reason': 'cost estimate is required'}
+Confirmed: missing cost cannot silently default to approval.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_2.py (exit 0) =====
+Initial evaluation: True
+
+=== First five proposals ===
+{'blocked': False, 'proposal': 'configuration change 1', 'proposal_number_since_evaluation': 1}
+{'blocked': False, 'proposal': 'configuration change 2', 'proposal_number_since_evaluation': 2}
+{'blocked': False, 'proposal': 'configuration change 3', 'proposal_number_since_evaluation': 3}
+{'blocked': False, 'proposal': 'configuration change 4', 'proposal_number_since_evaluation': 4}
+{'blocked': False, 'proposal': 'configuration change 5', 'proposal_number_since_evaluation': 5}
+
+=== Sixth proposal: must be blocked ===
+{'blocked': True, 'reason': 'five proposals reached; call evaluate() before another proposal'}
+
+=== Re-evaluate and retry ===
+Re-evaluation passed: True
+{'blocked': False, 'proposal': 'configuration change 6', 'proposal_number_since_evaluation': 1}
+
+Confirmed: proposal 6 was blocked until a fresh evaluation.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.

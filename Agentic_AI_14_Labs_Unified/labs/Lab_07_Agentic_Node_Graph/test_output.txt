@@ -1,0 +1,168 @@
+===== main.py =====
+
+=== NODE GRAPH ===
+requirement [requirement_agent] -> 
+planner [planner_agent] -> 
+builder [builder_agent] -> 
+tester [tester_agent] -> 
+reviewer [reviewer_agent] -> 
+human_gate [human]
+
+=== NODE CONTRACTS ===
+
+Node: requirement
+  Input: Campus event app goal
+  Output: At least three clear app requirements
+  Owner: requirement_agent
+  Success criteria: See success predicate in code
+  Retry behavior: Ask the user to clarify the goal, then retry once
+  Failure behavior: escalate_to_human: goal is too vague
+  Human approval: Not required
+
+Node: planner
+  Input: Extracted app requirements
+  Output: A task mapped to every requirement
+  Owner: planner_agent
+  Success criteria: See success predicate in code
+  Retry behavior: Regenerate the task breakdown once
+  Failure behavior: return_to_requirement
+  Human approval: Not required
+
+Node: builder
+  Input: Task breakdown
+  Output: Generated application code and build status
+  Owner: builder_agent
+  Success criteria: See success predicate in code
+  Retry behavior: Retry build once, then escalate to a human
+  Failure behavior: retry_build_or_escalate
+  Human approval: Not required
+
+Node: tester
+  Input: Generated application code
+  Output: Automated test result
+  Owner: tester_agent
+  Success criteria: See success predicate in code
+  Retry behavior: Send test failures to builder for correction
+  Failure behavior: route_back_to_builder
+  Human approval: Not required
+
+Node: reviewer
+  Input: Code and passing test result
+  Output: Code-review status
+  Owner: reviewer_agent
+  Success criteria: See success predicate in code
+  Retry behavior: Request fixes and run review again
+  Failure behavior: route_back_to_builder
+  Human approval: Not required
+
+Node: human_gate
+  Input: Reviewed application
+  Output: Human sign-off
+  Owner: human
+  Success criteria: See success predicate in code
+  Retry behavior: Revise according to human feedback
+  Failure behavior: return_to_planner_with_human_feedback
+  Human approval: Required before final acceptance
+
+=== SUCCESS PATH ===
+{'node': 'requirement', 'owner': 'requirement_agent', 'success': True, 'state_after': {'force_build_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button']}}
+{'node': 'planner', 'owner': 'planner_agent', 'success': True, 'state_after': {'force_build_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}}}
+{'node': 'builder', 'owner': 'builder_agent', 'success': True, 'state_after': {'force_build_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated'}}
+{'node': 'tester', 'owner': 'tester_agent', 'success': True, 'state_after': {'force_build_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'tests_passed': True}}
+{'node': 'reviewer', 'owner': 'reviewer_agent', 'success': True, 'state_after': {'force_build_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'tests_passed': True, 'review_clean': True}}
+{'node': 'human_gate', 'owner': 'human', 'success': True, 'state_after': {'force_build_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'tests_passed': True, 'review_clean': True, 'human_signoff': True}}
+
+=== FAILURE PATH ===
+{'node': 'requirement', 'owner': 'requirement_agent', 'success': True, 'state_after': {'force_build_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button']}}
+{'node': 'planner', 'owner': 'planner_agent', 'success': True, 'state_after': {'force_build_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}}}
+{'node': 'builder', 'owner': 'builder_agent', 'success': False, 'state_after': {'force_build_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': False}}
+{'node': 'builder', 'failure_behavior_triggered': 'retry_build_or_escalate', 'retry_behavior': 'Retry build once, then escalate to a human'}
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_1.py =====
+GRAPH:
+requirement -> planner -> builder -> security_scan -> tester -> reviewer -> human_gate
+
+requirement: input=Campus app goal; output=At least three app requirements; owner=requirement_agent; failure=escalate_to_human; approval=Not required
+
+planner: input=App requirements; output=Task mapped to each requirement; owner=planner_agent; failure=return_to_requirement; approval=Not required
+
+builder: input=Task breakdown; output=Generated application code; owner=builder_agent; failure=retry_build_or_escalate; approval=Not required
+
+security_scan: input=Generated application code; output=Security report and pass/fail result; owner=security_agent; failure=block_release_and_escalate_to_security_reviewer; approval=Security reviewer approval required if a critical issue is found
+
+tester: input=Security-approved application code; output=Automated test result; owner=tester_agent; failure=route_back_to_builder; approval=Not required
+
+reviewer: input=Code and passing tests; output=Code-review status; owner=reviewer_agent; failure=route_back_to_builder; approval=Not required
+
+human_gate: input=Reviewed application; output=Human sign-off; owner=human; failure=return_for_revision; approval=Required before final acceptance
+
+=== SUCCESS PATH WITH SECURITY SCAN ===
+{'node': 'requirement', 'owner': 'requirement_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button']}}
+{'node': 'planner', 'owner': 'planner_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}}}
+{'node': 'builder', 'owner': 'builder_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated'}}
+{'node': 'security_scan', 'owner': 'security_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'security_passed': True, 'security_report': 'No critical issues found'}}
+{'node': 'tester', 'owner': 'tester_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'security_passed': True, 'security_report': 'No critical issues found', 'tests_passed': True}}
+{'node': 'reviewer', 'owner': 'reviewer_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'security_passed': True, 'security_report': 'No critical issues found', 'tests_passed': True, 'review_clean': True}}
+{'node': 'human_gate', 'owner': 'human', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': False, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'security_passed': True, 'security_report': 'No critical issues found', 'tests_passed': True, 'review_clean': True, 'human_signoff': True}}
+
+=== SECURITY SCAN FAILURE ===
+{'node': 'requirement', 'owner': 'requirement_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button']}}
+{'node': 'planner', 'owner': 'planner_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}}}
+{'node': 'builder', 'owner': 'builder_agent', 'success': True, 'state_after': {'force_build_fail': False, 'force_security_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated'}}
+{'node': 'security_scan', 'owner': 'security_agent', 'success': False, 'state_after': {'force_build_fail': False, 'force_security_fail': True, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated', 'security_passed': False, 'security_report': 'Critical issue: unsafe input handling'}}
+{'node': 'security_scan', 'failure_behavior_triggered': 'block_release_and_escalate_to_security_reviewer', 'retry_behavior': 'Fix the vulnerability and rerun the scan; do not continue to testing'}
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_2.py =====
+
+=== SCENARIO A: FAIL ONCE, RETRY, THEN SUCCEED ===
+{'node': 'requirement', 'owner': 'requirement_agent', 'success': True, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 0, 'requirements': ['user login', 'event listing', 'RSVP button']}}
+{'node': 'planner', 'owner': 'planner_agent', 'success': True, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 0, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}}}
+{'node': 'builder', 'owner': 'builder_agent', 'attempt': 1, 'success': False, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 1, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': False, 'build_error': 'simulated build failure on attempt 1'}}
+Builder failed once: using its one permitted retry.
+{'node': 'builder', 'owner': 'builder_agent', 'attempt': 2, 'success': True, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 2, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated on attempt 2'}}
+{'node': 'tester', 'owner': 'tester_agent', 'success': True, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 2, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated on attempt 2', 'tests_passed': True}}
+{'node': 'reviewer', 'owner': 'reviewer_agent', 'success': True, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 2, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated on attempt 2', 'tests_passed': True, 'review_clean': True}}
+{'node': 'human_gate', 'owner': 'human', 'success': True, 'state_after': {'build_failures_before_success': 1, 'build_attempts': 2, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': True, 'code': 'app.py generated on attempt 2', 'tests_passed': True, 'review_clean': True, 'human_signoff': True}}
+
+=== SCENARIO B: FAIL TWICE, THEN ESCALATE ===
+{'node': 'requirement', 'owner': 'requirement_agent', 'success': True, 'state_after': {'build_failures_before_success': 2, 'build_attempts': 0, 'requirements': ['user login', 'event listing', 'RSVP button']}}
+{'node': 'planner', 'owner': 'planner_agent', 'success': True, 'state_after': {'build_failures_before_success': 2, 'build_attempts': 0, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}}}
+{'node': 'builder', 'owner': 'builder_agent', 'attempt': 1, 'success': False, 'state_after': {'build_failures_before_success': 2, 'build_attempts': 1, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': False, 'build_error': 'simulated build failure on attempt 1'}}
+Builder failed once: using its one permitted retry.
+{'node': 'builder', 'owner': 'builder_agent', 'attempt': 2, 'success': False, 'state_after': {'build_failures_before_success': 2, 'build_attempts': 2, 'requirements': ['user login', 'event listing', 'RSVP button'], 'tasks': {'user login': 'task_for(user login)', 'event listing': 'task_for(event listing)', 'RSVP button': 'task_for(RSVP button)'}, 'build_ok': False, 'build_error': 'simulated build failure on attempt 2'}}
+{'node': 'builder', 'failure_behavior_triggered': 'escalate_to_human', 'reason': 'Builder failed twice; no third attempt is allowed.'}
+
+Retry-limit checks passed: no scenario attempted a third build.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.

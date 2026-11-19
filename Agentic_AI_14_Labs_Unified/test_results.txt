@@ -1,0 +1,46 @@
+UNIFIED AGENTIC AI LAB TEST REPORT
+
+PASS | Lab_01_Agent_vs_Chatbot/assignment_1.py | exit=0
+PASS | Lab_01_Agent_vs_Chatbot/assignment_2.py | exit=0
+PASS | Lab_01_Agent_vs_Chatbot/main.py | exit=0
+PASS | Lab_02_Tool_Using_Agent/assignment_1.py | exit=0
+PASS | Lab_02_Tool_Using_Agent/assignment_2.py | exit=0
+PASS | Lab_02_Tool_Using_Agent/main.py | exit=0
+PASS | Lab_03_Skill_Creation/assignment_1.py | exit=0
+PASS | Lab_03_Skill_Creation/assignment_2.py | exit=0
+PASS | Lab_03_Skill_Creation/main.py | exit=0
+PASS | Lab_04_Memory_and_Retrieval/assignment_1.py | exit=0
+PASS | Lab_04_Memory_and_Retrieval/assignment_2.py | exit=0
+PASS | Lab_04_Memory_and_Retrieval/main.py | exit=0
+PASS | Lab_05_MCP_Style_Connector/assignment_1.py | exit=0
+PASS | Lab_05_MCP_Style_Connector/assignment_2.py | exit=0
+PASS | Lab_05_MCP_Style_Connector/main.py | exit=0
+PASS | Lab_06_Personal_Agent_Runtime/assignment_1.py | exit=0
+PASS | Lab_06_Personal_Agent_Runtime/assignment_2.py | exit=0
+PASS | Lab_06_Personal_Agent_Runtime/main.py | exit=0
+PASS | Lab_07_Agentic_Node_Graph/assignment_1.py | exit=0
+PASS | Lab_07_Agentic_Node_Graph/assignment_2.py | exit=0
+PASS | Lab_07_Agentic_Node_Graph/main.py | exit=0
+PASS | Lab_08_Parallel_Swarm/assignment_1.py | exit=0
+PASS | Lab_08_Parallel_Swarm/assignment_2.py | exit=0
+PASS | Lab_08_Parallel_Swarm/main.py | exit=0
+PASS | Lab_09_Deep_Research_Agent/assignment_1.py | exit=0
+PASS | Lab_09_Deep_Research_Agent/assignment_2.py | exit=0
+PASS | Lab_09_Deep_Research_Agent/main.py | exit=0
+PASS | Lab_10_Cloud_Operations_Agent/assignment_1.py | exit=0
+PASS | Lab_10_Cloud_Operations_Agent/assignment_2.py | exit=0
+PASS | Lab_10_Cloud_Operations_Agent/main.py | exit=0
+PASS | Lab_11_Agentic_SDLC_Factory/assignment_1.py | exit=0
+PASS | Lab_11_Agentic_SDLC_Factory/assignment_2.py | exit=0
+PASS | Lab_11_Agentic_SDLC_Factory/main.py | exit=0
+PASS | Lab_12_Safety_Evaluation_Governance/assignment_1.py | exit=0
+PASS | Lab_12_Safety_Evaluation_Governance/assignment_2.py | exit=0
+PASS | Lab_12_Safety_Evaluation_Governance/main.py | exit=0
+PASS | Lab_13_Discipline_Specific_Engineering_Agents/assignment_1.py | exit=0
+PASS | Lab_13_Discipline_Specific_Engineering_Agents/assignment_2.py | exit=0
+PASS | Lab_13_Discipline_Specific_Engineering_Agents/main.py | exit=0
+PASS | Lab_14_Capstone_Project_Studio/assignment_1.py | exit=0
+PASS | Lab_14_Capstone_Project_Studio/assignment_2.py | exit=0
+PASS | Lab_14_Capstone_Project_Studio/main.py | exit=0
+
+TOTAL: 42/42 passed

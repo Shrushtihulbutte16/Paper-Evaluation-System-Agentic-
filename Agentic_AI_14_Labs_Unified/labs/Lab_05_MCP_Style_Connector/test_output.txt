@@ -1,0 +1,53 @@
+===== main.py | PASS =====
+=== Capability discovery ===
+read_file (resource) input={'path': 'str'} output={'content': 'str'}
+query_db (tool) input={'sql': 'str'} output={'rows': 'list'}
+call_api (tool) input={'endpoint': 'str'} output={'data': 'any'}
+
+=== Call 1: read_file (resource) ===
+{'content': 'Agentic AI Systems - mini MCP server demo.'}
+
+=== Call 2: query_db (authorized SELECT) ===
+{'rows': [('AI Club Talk', 12), ('Hackathon Kickoff', 9), ('Robotics Demo', 15)]}
+
+=== Call 3: call_api (mock API tool) ===
+{'data': ['AI Club Talk', 'Robotics Demo']}
+
+=== Rejection: non-SELECT SQL ===
+{'error': 'only SELECT statements are permitted through this tool'}
+
+=== Rejection: unauthorized caller ===
+{'error': "caller 'unregistered_agent' is not permitted to use query_db"}
+
+=== Rejection: unknown file ===
+{'error': 'file not found: missing.txt'}
+
+===== assignment_1.py | PASS =====
+=== Dynamically discovered capabilities ===
+read_file (resource)
+query_db (tool)
+call_api (tool)
+list_files (resource)
+
+=== Invoke newly added capability ===
+Input: {}
+Output: {'files': ['README.md', 'events.csv', 'notes.txt']}
+PASS: new resource was discovered and invoked through generic dispatch.
+
+===== assignment_2.py | PASS =====
+=== Valid request ===
+{'content': 'Connector contract validation demo.'}
+
+=== Missing required input ===
+{'error': 'missing required input(s): path'}
+
+=== Unexpected input ===
+{'error': 'unexpected input(s): mode'}
+
+=== Unknown capability ===
+{'error': 'unknown capability: delete_everything'}
+
+=== Invalid SQL operation ===
+{'error': 'only SELECT statements are permitted'}
+
+PASS: connector validates requests and reports failures clearly.

@@ -1,0 +1,71 @@
+===== main.py =====
+RETURN CODE: 0
+=== Diagnostic + Approval Request ===
+severity: degraded
+incident_start: 14:03:40
+affected_service: payments-service
+immediate_mitigation: Monitor error rate and prepare incident communication.
+long_term_fix: Inspect the implicated code path and add regression coverage.
+diagnosis: Errors began at 14:03:40, after the 14:00:00 deployment of payments-service v2.4.1. Errors are concentrated in the refund path, consistent with a regression introduced in that release.
+proposed_action: rollback
+risk_if_wrong: Brief service interruption (~30 seconds) during rollback if the root-cause hypothesis is incorrect.
+rollback_plan: Revert to v2.4.0; if that also errors, re-deploy v2.4.1.
+status: AWAITING HUMAN APPROVAL -- NOT EXECUTED
+note: Urgency noted, but high-risk action still requires human approval; the approval gate is not bypassed.
+
+Confirmed: no destructive action was executed automatically.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_1.py =====
+RETURN CODE: 0
+=== Database Connection-Pool Incident ===
+incident_start: 15:02:45
+severity: early_warning
+diagnosis: Errors began at 15:02:45, after the 15:00:00 deployment of database-service v3.2.0. Errors are concentrated in the database connection pool path, consistent with a regression introduced in that release.
+affected_path: database connection pool
+suspect_deploy: {'ts': '15:00:00', 'service': 'database-service', 'version': 'v3.2.0', 'prev_version': 'v3.1.4'}
+
+Check passed: database incident has a distinct diagnosis and severity.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_2.py =====
+RETURN CODE: 0
+=== Warning-level low-risk scenario ===
+severity: early_warning
+action result: {'risk': 'low', 'action_executed': 'restart_single_pod', 'note': 'Low-risk action allowed by policy in this local simulation.'}
+
+=== Rollback safety check ===
+{'risk': 'high', 'diagnosis': 'Errors began at 14:03:40, after the 14:00:00 deployment of payments-service v2.4.1. Errors are concentrated in the refund path, consistent with a regression introduced in that release.', 'proposed_action': 'rollback', 'risk_if_wrong': 'Brief service interruption (~30 seconds) during rollback if the root-cause hypothesis is incorrect.', 'rollback_plan': 'Revert to v2.4.0; verify service health before considering v2.4.1 again.', 'status': 'AWAITING HUMAN APPROVAL -- NOT EXECUTED', 'note': 'Urgency does not bypass human approval for high-risk actions.'}
+
+Checks passed: low-risk action is simulated as executed; rollback remains approval-gated.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.

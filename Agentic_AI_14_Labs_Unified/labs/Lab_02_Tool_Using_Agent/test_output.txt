@@ -1,0 +1,109 @@
+===== main.py (exit=0) =====
+
+Q: How many students signed up for events this month, and what's the average per event?
+A: Total sign-ups: 74. Average per event: 12.33 (across 6 events).
+
+Q: Where and when is the Hackathon Kickoff?
+A: Hackathon Kickoff is at Innovation Lab on 2026-07-05.
+
+Q: Where and when is the Capstone Expo?
+A: I don't have location/date metadata for Capstone Expo in the events API.
+
+=== Full tool trace ===
+1. tool=read_csv reason="sign-up counts live in the CSV export, not the events API"
+   input={}
+   output={'rows': [{'event': 'AI Club Talk', 'signups': '12'}, {'event': 'Hackathon Kickoff', 'signups': '9'}, {'event': 'Robotics Demo', 'signups': '15'}, {'event': 'GenAI Workshop', 'signups': '7'}, {'event': 'Capstone Expo', 'signups': '20'}, {'event': 'Career Panel', 'signups': '11'}], 'row_count': 6}
+2. tool=calculator reason="sum the extracted signup column"
+   input={'operation': 'sum', 'values': [12, 9, 15, 7, 20, 11]}
+   output={'result': 74}
+3. tool=calculator reason="compute average over the same column"
+   input={'operation': 'average', 'values': [12, 9, 15, 7, 20, 11]}
+   output={'result': 12.333333333333334}
+4. tool=events_api reason="location/date metadata lives in the events API, not the CSV"
+   input={'event_name': 'Hackathon Kickoff'}
+   output={'date': '2026-07-05', 'location': 'Innovation Lab'}
+5. tool=events_api reason="checking events API for Capstone Expo metadata"
+   input={'event_name': 'Capstone Expo'}
+   output={'error': "no event metadata found for 'Capstone Expo'"}
+
+STDERR:
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_1.py (exit=0) =====
+Q: How many students signed up for events, and what's the average?
+A: Total sign-ups: 74. Average per event: 12.33. Notification drafted; sent=False.
+
+=== Tool trace, including notification justification ===
+1. tool=read_csv
+   reason=signup totals and averages must be read from the CSV export
+   input={}
+   output={'rows': [{'event': 'AI Club Talk', 'signups': '12'}, {'event': 'Hackathon Kickoff', 'signups': '9'}, {'event': 'Robotics Demo', 'signups': '15'}, {'event': 'GenAI Workshop', 'signups': '7'}, {'event': 'Capstone Expo', 'signups': '20'}, {'event': 'Career Panel', 'signups': '11'}], 'row_count': 6}
+2. tool=calculator
+   reason=calculate total sign-ups from the extracted CSV values
+   input={'operation': 'sum', 'values': [12, 9, 15, 7, 20, 11]}
+   output={'result': 74}
+3. tool=calculator
+   reason=calculate average sign-ups to compare against the alert threshold
+   input={'operation': 'average', 'values': [12, 9, 15, 7, 20, 11]}
+   output={'result': 12.333333333333334}
+4. tool=send_notification
+   reason=average sign-ups (12.33) are below the configured threshold (13)
+   input={'message': 'Low turnout notice: average event sign-ups are 12.33, below the threshold of 13.'}
+   output={'status': 'drafted', 'message': 'Low turnout notice: average event sign-ups are 12.33, below the threshold of 13.', 'sent': False}
+
+Notification is a draft only; no message was sent.
+
+STDERR:
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_2.py (exit=0) =====
+Q: What's the average sign-up for technical events only?
+A: Average sign-ups for technical events: 10.75 (across 4 events).
+
+=== Three-step tool trace ===
+1. tool=read_csv
+   reason=event sign-ups and categories are stored in the CSV
+   input={}
+   output={'rows': [{'event': 'AI Club Talk', 'signups': '12', 'category': 'technical'}, {'event': 'Hackathon Kickoff', 'signups': '9', 'category': 'technical'}, {'event': 'Robotics Demo', 'signups': '15', 'category': 'technical'}, {'event': 'GenAI Workshop', 'signups': '7', 'category': 'technical'}, {'event': 'Capstone Expo', 'signups': '20', 'category': 'social'}, {'event': 'Career Panel', 'signups': '11', 'category': 'social'}], 'row_count': 6}
+2. tool=filter_by_category
+   reason=select only events categorized as 'technical'
+   input={'rows': [{'event': 'AI Club Talk', 'signups': '12', 'category': 'technical'}, {'event': 'Hackathon Kickoff', 'signups': '9', 'category': 'technical'}, {'event': 'Robotics Demo', 'signups': '15', 'category': 'technical'}, {'event': 'GenAI Workshop', 'signups': '7', 'category': 'technical'}, {'event': 'Capstone Expo', 'signups': '20', 'category': 'social'}, {'event': 'Career Panel', 'signups': '11', 'category': 'social'}], 'category': 'technical'}
+   output={'rows': [{'event': 'AI Club Talk', 'signups': '12', 'category': 'technical'}, {'event': 'Hackathon Kickoff', 'signups': '9', 'category': 'technical'}, {'event': 'Robotics Demo', 'signups': '15', 'category': 'technical'}, {'event': 'GenAI Workshop', 'signups': '7', 'category': 'technical'}], 'row_count': 4}
+3. tool=calculator
+   reason=compute average only over the validated filtered subset
+   input={'operation': 'average', 'values': [12, 9, 15, 7]}
+   output={'result': 10.75}
+
+=== Empty-category validation test ===
+No events found in category 'arts'.
+Calculator called after empty filter: False
+
+STDERR:
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.

@@ -1,0 +1,74 @@
+===== main.py =====
+RETURN CODE: 0
+Launching independent role agents concurrently...
+\n=== Parallel role outputs ===
+research : Past events favored a 24-hour format with themed tracks.
+logistics : {'venue': 'Grand Hall', 'venue_cost': 45000, 'date': 'Saturday'}
+budget : {'total_cap': 30000}
+judging : Judge on innovation, technical depth, and demo quality.
+\n=== Merged draft plan ===
+{'format_notes': 'Past events favored a 24-hour format with themed tracks.', 'venue': 'Grand Hall', 'venue_cost': 45000, 'date': 'Saturday', 'budget_cap': 30000, 'judging_criteria': 'Judge on innovation, technical depth, and demo quality.'}
+\n=== Conflict resolution ===
+{'conflict': 'venue_cost exceeds budget_cap', 'roles_involved': ['logistics', 'budget'], 'logistics_value': 45000, 'budget_value': 30000} -> resolution: {'rule_applied': 'budget_over_preference', 'resolution': 'Reject venue at 45000; request logistics propose an alternative under 30000.'}
+\n=== Final conflict log ===
+{'conflict': 'venue_cost exceeds budget_cap', 'roles_involved': ['logistics', 'budget'], 'logistics_value': 45000, 'budget_value': 30000, 'rule_applied': 'budget_over_preference', 'resolution': 'Reject venue at 45000; request logistics propose an alternative under 30000.'}
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_1.py =====
+RETURN CODE: 0
+=== Five parallel role outputs ===
+research : Use a 24-hour event with themed tracks.
+logistics : {'venue': 'Grand Hall', 'venue_cost': 45000, 'date': 'Saturday'}
+budget : {'total_cap': 30000}
+judging : Innovation, technical depth, and demo quality.
+marketing : {'publicity_plan': 'Campus posters, social media, and email campaign', 'marketing_cost': 35000}
+\n=== Merged draft ===
+{'format_notes': 'Use a 24-hour event with themed tracks.', 'venue': 'Grand Hall', 'venue_cost': 45000, 'date': 'Saturday', 'budget_cap': 30000, 'judging_criteria': 'Innovation, technical depth, and demo quality.', 'publicity_plan': 'Campus posters, social media, and email campaign', 'marketing_cost': 35000}
+\n=== Extended conflict log ===
+{'conflict': 'venue_cost exceeds budget_cap', 'roles_involved': ['logistics', 'budget'], 'proposed_cost': 45000, 'budget_cap': 30000, 'rule_applied': 'budget_over_preference', 'resolution': 'Reduce or redesign venue_cost proposal from 45000 to fit within 30000.'}
+{'conflict': 'marketing_cost exceeds budget_cap', 'roles_involved': ['marketing', 'budget'], 'proposed_cost': 35000, 'budget_cap': 30000, 'rule_applied': 'budget_over_preference', 'resolution': 'Reduce or redesign marketing_cost proposal from 35000 to fit within 30000.'}
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+===== assignment_2.py =====
+RETURN CODE: 0
+=== Merged draft ===
+{'format_notes': 'Past events favored a 24-hour themed hackathon.', 'venue': 'Grand Hall', 'venue_cost': 45000, 'date': 'Saturday', 'venue_capacity': 100, 'budget_cap': 30000, 'judging_criteria': 'Innovation, technical depth, and demo quality', 'judges_available': 3, 'publicity_plan': 'Social media campaign', 'marketing_cost': 8000}
+\n=== Distributed critique ===
+{'role': 'logistics', 'objection': 'Venue capacity 100 may be too small for 150 participants.'}
+{'role': 'budget', 'objection': 'Combined cost 53000 exceeds budget cap 30000.'}
+{'role': 'judging', 'objection': 'Only 3 judges available; four are preferred.'}
+{'role': 'marketing', 'objection': 'Marketing cost 8000 exceeds role target allocation 5000.'}
+\nRoles raising objections: ['budget', 'judging', 'logistics', 'marketing']
+Independent objections: 4
+Check passed: at least two distinct roles independently raised objections.
+
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
